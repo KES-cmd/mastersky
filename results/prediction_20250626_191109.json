@@ -1,0 +1,37 @@
+{
+  "input_data": {
+    "Age": "44",
+    "Cholesterol": "0.25",
+    "Heart_Rate": "0.05",
+    "Exercise_Hours_Per_Week": "0.5",
+    "Diet": "2",
+    "Stress_Level": "3",
+    "Sedentary_Hours_Per_Day": "0.5",
+    "Income": "0.3",
+    "BMI": "0.5",
+    "Triglycerides": "0.3",
+    "Physical_Activity_Days_Per_Week": "2",
+    "Sleep_Hours_Per_Day": "0.7",
+    "Blood_Sugar": "0.3",
+    "CK_MB": "0.01",
+    "Troponin": "0.01",
+    "Systolic_blood_pressure": "0.9",
+    "Diastolic_blood_pressure": "0.1",
+    "Gender": "female",
+    "Diabetes": "1",
+    "Family_History": "0",
+    "Smoking": "1",
+    "Obesity": "0",
+    "Alcohol_Consumption": "1",
+    "Previous_Heart_Problems": "1",
+    "Medication_Use": "1"
+  },
+  "prediction": {
+    "risk_percentage": 53.8,
+    "timestamp": "2025-06-26T19:11:09.511147"
+  },
+  "model_info": {
+    "type": "CatBoost",
+    "version": "unknown"
+  }
+}

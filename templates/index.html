@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart Attack Risk Assessment</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    @import url(https://fonts.googleapis.com/css2?family=Lato&display=swap);
+    @import url(https://fonts.googleapis.com/css2?family=Open+Sans&display=swap);
+    @import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200);
+    
+    body, html {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    }
+    
+    #webcrumbs {
+      min-height: 100vh;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="webcrumbs">
+    <div class="w-full mx-auto p-4 lg:p-8">
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Header Section -->
+        <div class="text-center mb-8 bg-white rounded-2xl shadow-xl p-8">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-red-500 rounded-full mb-4">
+            <span class="material-symbols-outlined text-white text-2xl">monitor_heart</span>
+          </div>
+          <h1 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-2">Heart Attack Risk Assessment</h1>
+          <p class="text-gray-600 text-base lg:text-lg">AI-Powered Medical Assistant for Cardiovascular Risk Evaluation</p>
+        </div>
+        
+        <!-- Main Form Container -->
+        <form method="post" action="/predict" class="flex flex-col lg:flex-row gap-6">
+          
+          <!-- Left Column - Health Metrics -->
+          <div class="flex-1 bg-white rounded-2xl shadow-xl p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-6">Health Metrics</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <!-- Age -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Age (years)</label>
+                  <input name="Age" type="number" min="18" max="100" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" placeholder="18-100" required/>
+                </div>
+                
+                <!-- Cholesterol -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Cholesterol (mg/dL)</label>
+                  <select name="Cholesterol" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select level</option>
+                    <option value="0.05">Very Low (&lt;150)</option>
+                    <option value="0.25">Low (150-200)</option>
+                    <option value="0.5">Normal (200-240)</option>
+                    <option value="0.75">High (240-300)</option>
+                    <option value="0.95">Very High (&gt;300)</option>
+                  </select>
+                </div>
+                
+                <!-- Heart Rate -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Heart Rate (bpm)</label>
+                  <select name="Heart_Rate" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select range</option>
+                    <option value="0.02">Very Low (&lt;50)</option>
+                    <option value="0.05">Low (50-60)</option>
+                    <option value="0.1">Normal (60-80)</option>
+                    <option value="0.2">High (80-100)</option>
+                    <option value="0.3">Very High (&gt;100)</option>
+                  </select>
+                </div>
+                
+                <!-- Exercise Hours -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Exercise Hours</label>
+                  <select name="Exercise_Hours_Per_Week" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select hours</option>
+                    <option value="0.1">None (0)</option>
+                    <option value="0.3">Low (1-2)</option>
+                    <option value="0.5">Moderate (3-5)</option>
+                    <option value="0.7">High (5-7)</option>
+                    <option value="0.9">Very High (&gt;7)</option>
+                  </select>
+                </div>
+                
+                <!-- Diet Score -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Diet Score</label>
+                  <select name="Diet" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select score</option>
+                    <option value="0">Poor</option>
+                    <option value="1">Fair</option>
+                    <option value="2">Good</option>
+                    <option value="3">Excellent</option>
+                  </select>
+                </div>
+                
+                <!-- Stress Level -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Stress Level</label>
+                  <select name="Stress_Level" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select level</option>
+                    <option value="1">Very Low</option>
+                    <option value="3">Low</option>
+                    <option value="5">Moderate</option>
+                    <option value="7">High</option>
+                    <option value="10">Very High</option>
+                  </select>
+                </div>
+                
+                <!-- Sedentary Hours -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Sedentary Hours Per Day</label>
+                  <select name="Sedentary_Hours_Per_Day" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select hours</option>
+                    <option value="0.1">Low (&lt;4)</option>
+                    <option value="0.3">Moderate (4-8)</option>
+                    <option value="0.5">High (8-12)</option>
+                    <option value="0.7">Very High (&gt;12)</option>
+                  </select>
+                </div>
+                
+                <!-- Income -->
+                <div class="space-y-2">
+                  <div class="block text-sm font-semibold text-gray-700">Income Level</div>
+                  <select name="Income" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select level</option>
+                    <option value="0.1">Low</option>
+                    <option value="0.3">Below Average</option>
+                    <option value="0.5">Average</option>
+                    <option value="0.7">Above Average</option>
+                    <option value="0.9">High</option>
+                  </select>
+                </div>
+                
+                <!-- BMI -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">BMI</label>
+                  <select name="BMI" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select range</option>
+                    <option value="0.1">Underweight (&lt;18.5)</option>
+                    <option value="0.3">Normal (18.5-25)</option>
+                    <option value="0.5">Overweight (25-30)</option>
+                    <option value="0.7">Obese (30-40)</option>
+                    <option value="0.9">Morbidly Obese (&gt;40)</option>
+                  </select>
+                </div>
+                
+                <!-- Triglycerides -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Triglycerides Level</label>
+                  <select name="Triglycerides" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select level</option>
+                    <option value="0.1">Normal (&lt;150)</option>
+                    <option value="0.3">Borderline High (150-200)</option>
+                    <option value="0.5">High (200-500)</option>
+                    <option value="0.7">Very High (500-1000)</option>
+                    <option value="0.9">Extremely High (&gt;1000)</option>
+                  </select>
+                </div>
+                
+                <!-- Physical Activity -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Physical Activity Days Per Week</label>
+                  <select name="Physical_Activity_Days_Per_Week" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select days</option>
+                    <option value="0">None</option>
+                    <option value="1">1 day</option>
+                    <option value="2">2 days</option>
+                    <option value="3">3 days</option>
+                    <option value="4">4 days</option>
+                    <option value="5">5 days</option>
+                    <option value="6">6 days</option>
+                    <option value="7">Daily</option>
+                  </select>
+                </div>
+                
+                <!-- Sleep Hours -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Sleep Hours Per Day</label>
+                  <select name="Sleep_Hours_Per_Day" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select hours</option>
+                    <option value="0.0">&lt;4 hours</option>
+                    <option value="0.2">4-5 hours</option>
+                    <option value="0.5">5-7 hours</option>
+                    <option value="0.7">7-9 hours</option>
+                    <option value="1.0">&gt;9 hours</option>
+                  </select>
+                </div>
+                
+                <!-- Blood Sugar -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Blood Sugar Level</label>
+                  <select name="Blood_Sugar" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select level</option>
+                    <option value="0.1">Normal (&lt;100)</option>
+                    <option value="0.3">Prediabetes (100-125)</option>
+                    <option value="0.5">Diabetes (126-200)</option>
+                    <option value="0.7">High (200-300)</option>
+                    <option value="0.9">Very High (&gt;300)</option>
+                  </select>
+                </div>
+                
+                <!-- CK-MB -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">CK-MB Level</label>
+                  <select name="CK_MB" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select level</option>
+                    <option value="0.002">Normal (&lt;5)</option>
+                    <option value="0.01">Slightly Elevated (5-10)</option>
+                    <option value="0.05">Elevated (10-25)</option>
+                    <option value="0.2">High (25-50)</option>
+                    <option value="0.5">Very High (&gt;50)</option>
+                  </select>
+                </div>
+                
+                <!-- Troponin -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Troponin Level</label>
+                  <select name="Troponin" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select level</option>
+                    <option value="0.0002">Normal (&lt;0.01)</option>
+                    <option value="0.001">Slightly Elevated (0.01-0.1)</option>
+                    <option value="0.01">Elevated (0.1-1.0)</option>
+                    <option value="0.1">High (1.0-10)</option>
+                    <option value="0.3">Very High (&gt;10)</option>
+                  </select>
+                </div>
+                
+                <!-- Systolic BP -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Systolic BP (mmHg)</label>
+                  <select name="Systolic_blood_pressure" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select range</option>
+                    <option value="0.1">Low (&lt;90)</option>
+                    <option value="0.3">Normal (90-120)</option>
+                    <option value="0.5">Elevated (120-140)</option>
+                    <option value="0.7">High (140-180)</option>
+                    <option value="0.9">Very High (&gt;180)</option>
+                  </select>
+                </div>
+                
+                <!-- Diastolic BP -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Diastolic BP (mmHg)</label>
+                  <select name="Diastolic_blood_pressure" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select range</option>
+                    <option value="0.1">Low (&lt;60)</option>
+                    <option value="0.3">Normal (60-80)</option>
+                    <option value="0.5">Elevated (80-90)</option>
+                    <option value="0.7">High (90-120)</option>
+                    <option value="0.9">Very High (&gt;120)</option>
+                  </select>
+                </div>
+              </div>
+              
+
+              <!-- Right Column - Medical History -->
+            <div class="flex-1 bg-white rounded-2xl shadow-xl p-6 mt-6 lg:mt-0">
+              <h2 class="text-xl font-semibold text-gray-800 mb-6">Medical History & Lifestyle</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <!-- Gender -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Gender</label>
+                  <select name="Gender" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+                
+                <!-- Diabetes -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Diabetes</label>
+                  <select name="Diabetes" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+                
+                <!-- Family History -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Family History</label>
+                  <select name="Family_History" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+                
+                <!-- Smoking -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Smoking</label>
+                  <select name="Smoking" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+                
+                <!-- Obesity -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Obesity</label>
+                  <select name="Obesity" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+                
+                <!-- Alcohol Consumption -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Alcohol Consumption</label>
+                  <select name="Alcohol_Consumption" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+                
+                <!-- Previous Heart Problems -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Previous Heart Problems</label>
+                  <select name="Previous_Heart_Problems" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+                
+                <!-- Medication Use -->
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-gray-700">Medication Use</label>
+                  <select name="Medication_Use" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" required>
+                    <option value="">Select</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+              </div>
+              
+
+              <!-- Submit Button -->
+              <div class="flex justify-center pt-8">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-12 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2">
+                  <span class="material-symbols-outlined">psychology</span>
+                  <span>Analyze Risk</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Results Section -->
+          <div class="flex-1 bg-white rounded-2xl shadow-xl p-8">
+            <div class="text-center mb-6">
+              <h2 class="text-2xl font-bold text-gray-800 mb-2">Risk Assessment Result</h2>
+              <p class="text-gray-600">Based on your provided information</p>
+            </div>
+            
+            {% if result %}
+            <div class="mt-8">
+              <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-24 h-24 rounded-full mb-4 {{ 'risk-' + result.risk_class }}">
+                  <span class="text-3xl font-bold">{{ result.risk_percentage }}%</span>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">{{ result.risk_level }}</h3>
+                <p class="text-gray-600">Assessment completed on {{ result.timestamp }}</p>
+              </div>
+              
+              <div class="bg-gray-50 rounded-xl p-6 mb-6">
+                <h4 class="text-lg font-semibold text-gray-800 mb-4">Recommendations</h4>
+                <ul class="space-y-3">
+                  {% if result.risk_percentage < 30 %}
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-green-600">check_circle</span>
+                    <span>Your risk is relatively low. Maintain healthy habits with regular exercise and balanced diet.</span>
+                  </li>
+                  {% elif result.risk_percentage < 70 %}
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-yellow-600">warning</span>
+                    <span>Moderate risk detected. Consider lifestyle changes and consult with a healthcare provider.</span>
+                  </li>
+                  {% else %}
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-red-600">error</span>
+                    <span>High risk detected. Please consult a cardiologist for comprehensive evaluation.</span>
+                  </li>
+                  {% endif %}
+                  <li class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-indigo-600">monitor_heart</span>
+                    <span>Regular cardiovascular check-ups are recommended based on your risk factors.</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div class="flex justify-center">
+                <a href="/download/{{ result.json_filename }}" class="bg-white hover:bg-gray-50 text-indigo-600 font-medium py-3 px-6 rounded-lg border border-indigo-200 transition-all duration-300 flex items-center gap-2">
+                  <span class="material-symbols-outlined">download</span>
+                  <span>Download Full Report (JSON)</span>
+                </a>
+              </div>
+            </div>
+            {% else %}
+            <div class="text-center py-12">
+              <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+                <span class="material-symbols-outlined text-gray-400">assignment</span>
+              </div>
+              <h3 class="text-lg font-medium text-gray-600">Submit your health information to get a risk assessment</h3>
+            </div>
+            {% endif %}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              500: '#6366F1',
+            }
+          }
+        }
+      }
+    };
+  </script>
+</body>
+</html>
